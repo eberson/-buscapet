@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Buscapet</string>
+
+    <string name="hint_login_email">Email</string>
+    <string name="hint_login_password">Senha</string>
+    <string name="hint_register_first_name">Nome</string>
+    <string name="hint_register_last_name">Sobrenome</string>
+    <string name="hint_register_email">Email</string>
+    <string name="hint_register_password">Senha</string>
+    <string name="hint_register_confirm_password">Confirmar Senha</string>
+
+    <string name="cd_avatar">Imagem do Perfil</string>
+
+    <string name="btn_sign_in">Entrar</string>
+    <string name="btn_sign_up">Cadastrar</string>
+
+    <string name="lnk_register">Cadastro</string>
+
+    <string name="msg_required_field">Campo obrigatório</string>
+    <string name="msg_password_does_not_match">As senhas são diferentes</string>
+    <string name="msg_invalid_email">E-mail inválido</string>
+    <string name="msg_invalid_credential">Credenciais inválidas</string>
+    <string name="msg_login_welcome">Seja bem vindo, %1$s!</string>
+    <string name="msg_user_created">Usuário criado com sucesso!</string>
+</resources>
