@@ -43,5 +43,7 @@ class LoginActivity : AppCompatActivity() {
             getString(R.string.msg_login_welcome, user.firstName),
             Toast.LENGTH_SHORT
         ).show()
+
+        finish()
     }
 }

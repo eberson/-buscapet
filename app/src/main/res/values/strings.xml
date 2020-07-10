@@ -8,11 +8,16 @@
     <string name="hint_register_email">Email</string>
     <string name="hint_register_password">Senha</string>
     <string name="hint_register_confirm_password">Confirmar Senha</string>
+    <string name="hint_pet_lost_title">Título da Publicação</string>
+    <string name="hint_pet_lost_description">Descrição da Publicação</string>
 
     <string name="cd_avatar">Imagem do Perfil</string>
+    <string name="cd_pet_avatar">Avatar do animal de estimação</string>
+    <string name="cd_confirm_pet_picture">Confirmar a foto do animal de estimação</string>
 
     <string name="btn_sign_in">Entrar</string>
     <string name="btn_sign_up">Cadastrar</string>
+    <string name="btn_publish">Publicar</string>
 
     <string name="lnk_register">Cadastro</string>
 

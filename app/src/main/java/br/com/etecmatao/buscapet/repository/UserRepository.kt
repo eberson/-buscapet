@@ -4,7 +4,15 @@ import br.com.etecmatao.buscapet.model.User
 import java.lang.Exception
 
 class UserRepository {
-    private var users: MutableList<User> = mutableListOf()
+    private var users: MutableList<User> = mutableListOf(
+        User(
+            id = 1,
+            firstName = "Eberson",
+            lastName = "Oliveira",
+            email = "eberson.oliveira@gmail.com",
+            password = "123456"
+        )
+    )
 
     fun save(user: User){
         user.id = (users.size + 1).toLong()
