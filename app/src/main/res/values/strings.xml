@@ -14,6 +14,7 @@
     <string name="cd_avatar">Imagem do Perfil</string>
     <string name="cd_pet_avatar">Avatar do animal de estimação</string>
     <string name="cd_confirm_pet_picture">Confirmar a foto do animal de estimação</string>
+    <string name="cd_take_photo">Tire uma foto do seu animal de estimação</string>
 
     <string name="btn_sign_in">Entrar</string>
     <string name="btn_sign_up">Cadastrar</string>
@@ -27,4 +28,5 @@
     <string name="msg_invalid_credential">Credenciais inválidas</string>
     <string name="msg_login_welcome">Seja bem vindo, %1$s!</string>
     <string name="msg_user_created">Usuário criado com sucesso!</string>
+    <string name="msg_permission_not_granted">Usuário não deu as permissões necessárias</string>
 </resources>
