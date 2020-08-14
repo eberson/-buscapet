@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import br.com.etecmatao.buscapet.fragments.PetLostConfirmPictureFragment
+import br.com.etecmatao.buscapet.fragments.PetLostGalleryFragment
 import br.com.etecmatao.buscapet.fragments.PetLostSaveFragment
 
 class PetLostRegister : AppCompatActivity() {
@@ -38,8 +39,8 @@ class PetLostRegister : AppCompatActivity() {
 
     private inner class PetLostPageAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa){
         private val fragments : MutableList<Fragment> = mutableListOf(
+            PetLostGalleryFragment(),
             PetLostConfirmPictureFragment(),
-            PetLostSaveFragment(),
             PetLostSaveFragment()
         )
 
