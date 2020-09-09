@@ -1,37 +1,21 @@
 package br.com.etecmatao.buscapet
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.etecmatao.buscapet.adapter.AdvertisementAdapter
-import br.com.etecmatao.buscapet.viewModel.AdvertisementViewModel
+import androidx.navigation.Navigation
+import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_main.*
 
-class HomeActivity : AppCompatActivity() {
-
-
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        setContentView(R.layout.activity_main)
 
-        val adapter = AdvertisementAdapter(this)
-        val vm = ViewModelProvider(this).get(AdvertisementViewModel::class.java)
-
-        adItems.apply {
-            this.adapter = adapter
-            this.layoutManager = LinearLayoutManager(this@HomeActivity)
-        }
-
-        vm.advertisements.observe(this, Observer { items ->
-            items?.let {  adapter.addItems(it) }
-        })
+        setUpViews()
     }
 
     override fun onResume() {
@@ -42,11 +26,6 @@ class HomeActivity : AppCompatActivity() {
         if (!app.isLoggedIn()){
             app.goToLogin(this)
         }
-    }
-
-    fun startPublishing(v: View){
-        val intent = Intent(this, AdvertisementActivity::class.java)
-        startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -66,5 +45,16 @@ class HomeActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun setUpViews(){
+        var controller = Navigation.findNavController(this, R.id.navigation_host)
+
+        navigation.setupWithNavController(controller)
+        setupActionBarWithNavController(controller)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return Navigation.findNavController(this, R.id.navigation_host).navigateUp()
     }
 }

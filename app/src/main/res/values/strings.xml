@@ -8,6 +8,8 @@
     <string name="hint_register_email">Email</string>
     <string name="hint_register_password">Senha</string>
     <string name="hint_register_confirm_password">Confirmar Senha</string>
+    <string name="hint_ad_title">Título</string>
+    <string name="hint_ad_description">Descrição</string>
     <string name="hint_pet_lost_title">Título da Publicação</string>
     <string name="hint_pet_lost_description">Descrição da Publicação</string>
 
@@ -19,6 +21,9 @@
     <string name="btn_sign_in">Entrar</string>
     <string name="btn_sign_up">Cadastrar</string>
     <string name="btn_publish">Publicar</string>
+    <string name="btn_exit">Sair</string>
+    <string name="btn_new_add">Novo Anúncio</string>
+
 
     <string name="lnk_register">Cadastro</string>
 
@@ -29,4 +34,21 @@
     <string name="msg_login_welcome">Seja bem vindo, %1$s!</string>
     <string name="msg_user_created">Usuário criado com sucesso!</string>
     <string name="msg_permission_not_granted">Usuário não deu as permissões necessárias</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_my_posts">Postagens</string>
+    <string name="menu_profile">Perfil</string>
+
+    <string name="screen_home">Home</string>
+    <string name="screen_my_posts">Posts</string>
+    <string name="screen_profile">Perfil</string>
+    <string name="screen_advertisement">Anúncios</string>
+
+    <string-array name="ad_types">
+        <item>Anúncio</item>
+        <item>Doação</item>
+        <item>Animal Perdido</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

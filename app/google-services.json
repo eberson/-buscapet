@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "948978335392",
+    "firebase_url": "https://buscapet-ac5af.firebaseio.com",
+    "project_id": "buscapet-ac5af",
+    "storage_bucket": "buscapet-ac5af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948978335392:android:c1fe95b0295ab69b7053c5",
+        "android_client_info": {
+          "package_name": "br.com.etecmatao.buscapet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948978335392-4mcissabfd3hufpbovmra5smib3721v3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.etecmatao.buscapet",
+            "certificate_hash": "edf0f5ca16118d74863fc43a1464ed81d3d227f1"
+          }
+        },
+        {
+          "client_id": "948978335392-vvjobcnm1ih582u7ie4vqhnd0s3dkvpj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAmGgtdbA12CdZ20yVAfdDpEV-vHa-mUI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948978335392-vvjobcnm1ih582u7ie4vqhnd0s3dkvpj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
