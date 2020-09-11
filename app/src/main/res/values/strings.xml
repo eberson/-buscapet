@@ -13,6 +13,7 @@
     <string name="hint_pet_lost_title">Título da Publicação</string>
     <string name="hint_pet_lost_description">Descrição da Publicação</string>
 
+    <string name="cd_post_image">Imagem da Postagem</string>
     <string name="cd_avatar">Imagem do Perfil</string>
     <string name="cd_pet_avatar">Avatar do animal de estimação</string>
     <string name="cd_confirm_pet_picture">Confirmar a foto do animal de estimação</string>
@@ -40,7 +41,8 @@
     <string name="menu_profile">Perfil</string>
 
     <string name="screen_home">Home</string>
-    <string name="screen_my_posts">Posts</string>
+    <string name="screen_my_posts">Minhas Postagens</string>
+    <string name="screen_post">Postagem</string>
     <string name="screen_profile">Perfil</string>
     <string name="screen_advertisement">Anúncios</string>
 

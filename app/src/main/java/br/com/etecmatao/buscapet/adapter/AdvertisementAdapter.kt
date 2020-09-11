@@ -1,16 +1,23 @@
 package br.com.etecmatao.buscapet.adapter
 
 import android.content.Context
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import br.com.etecmatao.buscapet.R
+import br.com.etecmatao.buscapet.fragments.HomeFragmentDirections
+import br.com.etecmatao.buscapet.model.AdType
 import br.com.etecmatao.buscapet.model.Advertisement
 import kotlinx.android.synthetic.main.ad_item_layout.view.*
+import java.util.*
+
 
 class AdvertisementAdapter internal constructor(context: Context): RecyclerView.Adapter<AdvertisementAdapter.AdvertisementViewHolder>() {
 
+    private val dateFormat = DateFormat.getDateFormat(context)
     private val inflater = LayoutInflater.from(context)
     private val items: MutableList<Advertisement> = mutableListOf()
 
@@ -20,7 +27,20 @@ class AdvertisementAdapter internal constructor(context: Context): RecyclerView.
 
             itemView.txtAdTitle.text = item.title
             itemView.txtAdDescription.text = item.description
-            itemView.txtAdType.text = item.type.toString()
+            itemView.txtDate.text = dateFormat.format(item.date ?: Date())
+
+            val resource = when(item.type){
+                AdType.PET_LOST -> R.drawable.ic_pet_lost
+                AdType.PET_DONATION -> R.drawable.ic_pet_donation
+                AdType.PET_ADVERTISEMENT -> R.drawable.ic_cao
+                else -> R.drawable.ic_cao
+            }
+
+            itemView.imgAdType.setImageResource(resource)
+            itemView.setOnClickListener {
+                val action = HomeFragmentDirections.actionHomeToPost(item.id)
+                it.findNavController().navigate(action)
+            }
         }
     }
 
