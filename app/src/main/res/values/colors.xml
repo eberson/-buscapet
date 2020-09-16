@@ -8,4 +8,6 @@
     <color name="colorAccentDark">#7233EB</color>
     <color name="white">#FFF</color>
     <color name="softGray">#e8e8e8</color>
+    <color name="myMessage">#50A162</color>
+    <color name="otherMessage">#999</color>
 </resources>

@@ -7,4 +7,6 @@ data class Message(
     var user: User,
     var date: Date = Date(),
     var text: String
-)
+){
+    constructor(): this("", User(), text = "")
+}

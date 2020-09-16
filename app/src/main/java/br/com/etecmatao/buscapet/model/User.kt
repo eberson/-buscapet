@@ -10,4 +10,8 @@ data class User(
     var picture: String
 ){
     constructor(): this(firstName = "", lastName = "", email = "", picture = "")
+
+    fun getFullName():String {
+        return "$firstName $lastName"
+    }
 }
