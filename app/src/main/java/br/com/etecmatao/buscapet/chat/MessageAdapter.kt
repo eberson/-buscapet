@@ -7,6 +7,8 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginLeft
 import androidx.recyclerview.widget.RecyclerView
 import br.com.etecmatao.buscapet.R
 import br.com.etecmatao.buscapet.model.Message
@@ -32,12 +34,21 @@ class MessageAdapter(context: Context) : RecyclerView.Adapter<MessageAdapter.Mes
             itemView.txtChatSender.visibility = VISIBLE
             itemView.chatContainer.setBackgroundResource(R.color.otherMessage)
 
+            val params = itemView.chatContainer.layoutParams as ConstraintLayout.LayoutParams
+
+            params.marginEnd = 80
+            params.marginStart = 8
+
             user?.let { u ->
                 if (u.id == message.user.id){
                     itemView.txtChatSender.visibility = GONE
                     itemView.chatContainer.setBackgroundResource(R.color.myMessage)
+                    params.marginEnd = 8
+                    params.marginStart = 80
                 }
             }
+
+            itemView.chatContainer.layoutParams = params
         }
     }
 
