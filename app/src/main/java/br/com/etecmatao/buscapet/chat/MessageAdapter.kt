@@ -14,6 +14,7 @@ import br.com.etecmatao.buscapet.R
 import br.com.etecmatao.buscapet.model.Message
 import br.com.etecmatao.buscapet.model.User
 import kotlinx.android.synthetic.main.chat_item_layout.view.*
+import java.util.*
 
 class MessageAdapter(context: Context) : RecyclerView.Adapter<MessageAdapter.MessageViewHolder>() {
     private val timeFormatter = DateFormat.getTimeFormat(context)
@@ -71,6 +72,7 @@ class MessageAdapter(context: Context) : RecyclerView.Adapter<MessageAdapter.Mes
     fun setMessages(messages: List<Message>){
         items.clear()
         items.addAll(messages)
+        items.sortBy { it.date }
         notifyDataSetChanged()
     }
 }
