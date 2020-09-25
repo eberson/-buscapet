@@ -11,18 +11,18 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.etecmatao.buscapet.R
 import br.com.etecmatao.buscapet.adapter.AdvertisementAdapter
-import br.com.etecmatao.buscapet.viewModel.HomeViewModel
+import br.com.etecmatao.buscapet.viewModel.PostsViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
 
-    private lateinit var vm: HomeViewModel
+    private lateinit var vm: PostsViewModel
     private lateinit var adapter: AdvertisementAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        vm = ViewModelProvider(this).get(HomeViewModel::class.java)
+        vm = ViewModelProvider(this).get(PostsViewModel::class.java)
         adapter = AdvertisementAdapter(requireContext())
     }
 
@@ -44,19 +44,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vm.user.observe(viewLifecycleOwner, Observer {
-            it?.let { user ->
-                txtFullName.text = "${user.firstName} ${user.lastName}"
-                txtEmail.text = user.email
-            }
-        })
-
-        vm.advertisements.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.addItems(it)
-            }
-        })
-
         val adapter = this.adapter
 
         advertisementsItems.apply {
@@ -65,7 +52,27 @@ class HomeFragment : Fragment() {
         }
 
         btnNewAdd.setOnClickListener {
-            it.findNavController().navigate(R.id.action_home_to_advertisement)
+            it.findNavController().navigate(R.id.action_home_to_add_type)
         }
+
+        registerObservers()
+    }
+
+    private fun registerObservers(){
+        vm.user.observe(viewLifecycleOwner, Observer {
+            it?.let { user ->
+                vm.filterMyAdvertisements()
+                txtFullName.text = "${user.firstName} ${user.lastName}"
+                txtEmail.text = user.email
+            }
+        })
+
+        vm.myAdvertisements.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.addItems(it)
+            }
+        })
+
+
     }
 }

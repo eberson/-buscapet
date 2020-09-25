@@ -15,21 +15,50 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeViewModel(application: Application): AndroidViewModel(application) {
+class PostsViewModel(application: Application): AndroidViewModel(application) {
+    private val shouldFilter: MutableLiveData<Boolean> = MutableLiveData(true)
+
     val user: MutableLiveData<User> = MutableLiveData()
     val advertisements: MutableLiveData<List<Advertisement>> = MutableLiveData()
+    val myAdvertisements: MutableLiveData<List<Advertisement>> = MutableLiveData()
+
+    fun filterMyAdvertisements() = viewModelScope.launch(Dispatchers.IO) {
+        if (!shouldFilter.value!!){
+            return@launch
+        }
+
+        user.value?.let { usr ->
+            advertisements.value?.let { items ->
+                val filteredItems = items.filter { it.user?.id == usr.id}
+                myAdvertisements.postValue(filteredItems)
+            }
+        }
+    }
 
     fun loadAdvertisements() = viewModelScope.launch(Dispatchers.IO) {
         val database = FirebaseDatabase.getInstance()
 
         database.getReference("advertisements").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                shouldFilter.postValue(true)
+
                 val items = mutableListOf<Advertisement>()
+                val filteredItems = mutableListOf<Advertisement>()
 
                 snapshot.children.forEach{
-                    items.add(it.getValue(Advertisement::class.java)!!)
+                    val item = it.getValue(Advertisement::class.java)!!
+
+                    user.value?.let { usr ->
+                        shouldFilter.postValue(false)
+                        if (usr.id == item.user?.id){
+                            filteredItems.add(item)
+                        }
+                    }
+
+                    items.add(item)
                 }
 
+                myAdvertisements.postValue(filteredItems)
                 advertisements.value = items
             }
 

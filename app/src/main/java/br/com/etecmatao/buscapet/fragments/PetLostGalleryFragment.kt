@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.etecmatao.buscapet.R
 import br.com.etecmatao.buscapet.adapter.GalleryImageAdapter
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.pet_lost_gallery_fragment.*
 class PetLostGalleryFragment: Fragment() {
 
     private val galleryList = mutableListOf<Image>()
-    lateinit var galleryAdapter: GalleryImageAdapter
+    private lateinit var galleryAdapter: GalleryImageAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +34,10 @@ class PetLostGalleryFragment: Fragment() {
         galleryItems.apply {
             layoutManager = GridLayoutManager(context, SPAN_COUNT)
             adapter = galleryAdapter
+        }
+
+        btnGalleryContinue.setOnClickListener {
+            findNavController().navigate(R.id.action_gallery_to_confirm_image)
         }
 
         loadImages()

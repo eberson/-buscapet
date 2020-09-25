@@ -13,6 +13,7 @@
     <string name="hint_pet_lost_title">Título da Publicação</string>
     <string name="hint_pet_lost_description">Descrição da Publicação</string>
     <string name="hint_type_message">Digite sua mensagem</string>
+    <string name="hint_select_post_type">Clique no tipo de postagem que deseja criar</string>
 
     <string name="cd_post_image">Imagem da Postagem</string>
     <string name="cd_avatar">Imagem do Perfil</string>
@@ -20,12 +21,19 @@
     <string name="cd_confirm_pet_picture">Confirmar a foto do animal de estimação</string>
     <string name="cd_take_photo">Tire uma foto do seu animal de estimação</string>
     <string name="cd_send_message">Envia mensagem para o chat</string>
+    <string name="cd_advertisement">Novo Anúncio</string>
+    <string name="cd_pet_lot">Animal Perdido</string>
+    <string name="cd_pet_donation">Nova Doação</string>
+    <string name="cd_ad_type">Tipo da Postagem</string>
 
     <string name="btn_sign_in">Entrar</string>
     <string name="btn_sign_up">Cadastrar</string>
     <string name="btn_publish">Publicar</string>
     <string name="btn_exit">Sair</string>
     <string name="btn_new_add">Novo Anúncio</string>
+    <string name="btn_continue">Continuar</string>
+    <string name="btn_back">Voltar</string>
+    <string name="btn_post">Postar</string>
 
 
     <string name="lnk_register">Cadastro</string>
@@ -37,6 +45,7 @@
     <string name="msg_login_welcome">Seja bem vindo, %1$s!</string>
     <string name="msg_user_created">Usuário criado com sucesso!</string>
     <string name="msg_permission_not_granted">Usuário não deu as permissões necessárias</string>
+    <string name="msg_post_complete_successful">A postagem, %1$s, foi realizada com sucesso!</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_my_posts">Postagens</string>
@@ -45,8 +54,11 @@
     <string name="screen_home">Home</string>
     <string name="screen_my_posts">Minhas Postagens</string>
     <string name="screen_post">Postagem</string>
+    <string name="screen_gallery_post">Imagem da Postagem</string>
+    <string name="screen_confirm_image_post">Confirmação de imagem</string>
+    <string name="screen_post_type">Tipo da Postagem</string>
     <string name="screen_profile">Perfil</string>
-    <string name="screen_advertisement">Anúncios</string>
+    <string name="screen_advertisement">Dados da Postagem</string>
 
     <string-array name="ad_types">
         <item>Anúncio</item>

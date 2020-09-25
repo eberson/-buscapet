@@ -28,15 +28,7 @@ class AdvertisementAdapter internal constructor(context: Context): RecyclerView.
             itemView.txtAdTitle.text = item.title
             itemView.txtAdDescription.text = item.description
             itemView.txtDate.text = dateFormat.format(item.date ?: Date())
-
-            val resource = when(item.type){
-                AdType.PET_LOST -> R.drawable.ic_pet_lost
-                AdType.PET_DONATION -> R.drawable.ic_pet_donation
-                AdType.PET_ADVERTISEMENT -> R.drawable.ic_cao
-                else -> R.drawable.ic_cao
-            }
-
-            itemView.imgAdType.setImageResource(resource)
+            itemView.imgAdType.setImageResource(item.type.resourceImage)
             itemView.setOnClickListener {
                 val action = HomeFragmentDirections.actionHomeToPost(item.id)
                 it.findNavController().navigate(action)
