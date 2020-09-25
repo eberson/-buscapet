@@ -1,60 +1,51 @@
 package br.com.etecmatao.buscapet.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.etecmatao.buscapet.R
+import br.com.etecmatao.buscapet.adapter.AdvertisementAdapter
+import br.com.etecmatao.buscapet.viewModel.PostsViewModel
+import kotlinx.android.synthetic.main.fragment_my_posts.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MyPostsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MyPostsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var vm: PostsViewModel
+    private lateinit var adapter: AdvertisementAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_posts, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MyPostsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyPostsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        vm = ViewModelProvider(requireActivity()).get(PostsViewModel::class.java)
+        adapter = AdvertisementAdapter(requireContext()){
+            val action = MyPostsFragmentDirections.actionMyPostsToPost(it.id)
+            findNavController().navigate(action)
+        }
+
+
+        adItemsView.layoutManager = LinearLayoutManager(requireContext())
+        adItemsView.adapter = adapter
+
+        registerObservers()
+    }
+
+    private fun registerObservers(){
+        vm.advertisements.observe(viewLifecycleOwner, Observer {
+            it?.let { items ->
+                adapter.addItems(items)
             }
+        })
     }
 }

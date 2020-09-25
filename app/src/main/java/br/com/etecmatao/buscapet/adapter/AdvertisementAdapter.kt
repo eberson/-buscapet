@@ -15,14 +15,14 @@ import kotlinx.android.synthetic.main.ad_item_layout.view.*
 import java.util.*
 
 
-class AdvertisementAdapter internal constructor(context: Context): RecyclerView.Adapter<AdvertisementAdapter.AdvertisementViewHolder>() {
+class AdvertisementAdapter internal constructor(context: Context, private val onItemClicked: (advertisement: Advertisement) -> Unit): RecyclerView.Adapter<AdvertisementAdapter.AdvertisementViewHolder>() {
 
     private val dateFormat = DateFormat.getDateFormat(context)
     private val inflater = LayoutInflater.from(context)
     private val items: MutableList<Advertisement> = mutableListOf()
 
     inner class AdvertisementViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        fun bind(position: Int){
+        fun bind(position: Int, onItemClicked: (advertisement: Advertisement) -> Unit){
             val item = items[position]
 
             itemView.txtAdTitle.text = item.title
@@ -30,8 +30,7 @@ class AdvertisementAdapter internal constructor(context: Context): RecyclerView.
             itemView.txtDate.text = dateFormat.format(item.date ?: Date())
             itemView.imgAdType.setImageResource(item.type.resourceImage)
             itemView.setOnClickListener {
-                val action = HomeFragmentDirections.actionHomeToPost(item.id)
-                it.findNavController().navigate(action)
+                onItemClicked(item)
             }
         }
     }
@@ -42,7 +41,7 @@ class AdvertisementAdapter internal constructor(context: Context): RecyclerView.
     }
 
     override fun onBindViewHolder(holder: AdvertisementViewHolder, position: Int) {
-        holder.bind(position)
+        holder.bind(position, onItemClicked)
     }
 
     override fun getItemCount(): Int = items.size

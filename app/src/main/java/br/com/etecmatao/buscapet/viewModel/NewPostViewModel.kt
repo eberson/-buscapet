@@ -70,6 +70,4 @@ class NewPostViewModel(application: Application): AndroidViewModel(application) 
                 }
             }
     }
-
-
 }

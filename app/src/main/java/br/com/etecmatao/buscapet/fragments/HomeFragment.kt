@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.etecmatao.buscapet.R
 import br.com.etecmatao.buscapet.adapter.AdvertisementAdapter
@@ -22,8 +23,11 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        vm = ViewModelProvider(this).get(PostsViewModel::class.java)
-        adapter = AdvertisementAdapter(requireContext())
+        vm = ViewModelProvider(requireActivity()).get(PostsViewModel::class.java)
+        adapter = AdvertisementAdapter(requireContext()){
+            val action = HomeFragmentDirections.actionHomeToPost(it.id)
+            findNavController().navigate(action)
+        }
     }
 
     override fun onCreateView(

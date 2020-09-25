@@ -35,7 +35,16 @@
         android:id="@+id/nav_my_posts"
         android:name="br.com.etecmatao.buscapet.fragments.MyPostsFragment"
         android:label="@string/screen_my_posts"
-        tools:layout="@layout/fragment_my_posts" />
+        tools:layout="@layout/fragment_my_posts">
+        <action
+            android:id="@+id/action_my_posts_to_post"
+            app:destination="@id/nav_post"
+            app:popUpTo="@id/nav_my_posts">
+            <argument
+                android:name="postID"
+                app:argType="string" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/nav_advertisement"
@@ -57,7 +66,7 @@
         android:id="@+id/nav_gallery_post"
         android:name="br.com.etecmatao.buscapet.fragments.PetLostGalleryFragment"
         android:label="@string/screen_gallery_post"
-        tools:layout="@layout/pet_lost_gallery_fragment" >
+        tools:layout="@layout/pet_lost_gallery_fragment">
         <action
             android:id="@+id/action_gallery_to_confirm_image"
             app:destination="@id/nav_confirm_image_post"
@@ -68,7 +77,7 @@
         android:id="@+id/nav_confirm_image_post"
         android:name="br.com.etecmatao.buscapet.fragments.PetLostConfirmPictureFragment"
         android:label="@string/screen_confirm_image_post"
-        tools:layout="@layout/pet_lost_confirm_picture_fragment" >
+        tools:layout="@layout/pet_lost_confirm_picture_fragment">
         <action
             android:id="@+id/action_confirm_image_to_post"
             app:destination="@id/nav_advertisement"
@@ -79,7 +88,7 @@
         android:id="@+id/nav_add_type_post"
         android:name="br.com.etecmatao.buscapet.fragments.AdvertisementTypeFragment"
         android:label="@string/screen_post_type"
-        tools:layout="@layout/fragment_advertisement_type" >
+        tools:layout="@layout/fragment_advertisement_type">
         <action
             android:id="@+id/action_add_type_to_gallery"
             app:destination="@id/nav_gallery_post"

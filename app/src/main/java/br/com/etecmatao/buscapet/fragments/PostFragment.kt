@@ -46,12 +46,44 @@ class PostFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        registerObservables()
+
+        btnSendMessage.setOnClickListener {
+            chatViewModel.user.value?.let { user ->
+                val message = Message(user = user, text = txtMessage.text.toString())
+
+                chatViewModel.sendMessage(chatID, message)
+                txtMessage.setText("")
+            }
+        }
+
+        btnSolve.setOnClickListener {
+            vm.markAsResolved(vm.post.value!!)
+        }
+
+        messagesView.adapter = adapter
+        messagesView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        vm.loadPost(args.postID)
+    }
+
+    private fun registerObservables(){
         chatViewModel.user.observe(viewLifecycleOwner, Observer {
             adapter.setUser(it)
         })
 
         chatViewModel.messages.observe(viewLifecycleOwner, Observer {
             adapter.setMessages(it)
+        })
+
+        vm.mayResolve.observe(viewLifecycleOwner, Observer {
+            it?.let { allowed ->
+                btnSolve.isEnabled = allowed
+            }
         })
 
         vm.post.observe(viewLifecycleOwner, Observer {
@@ -73,23 +105,5 @@ class PostFragment : Fragment() {
 
             imgPost.setImageResource(resource)
         })
-
-        btnSendMessage.setOnClickListener {
-            chatViewModel.user.value?.let { user ->
-                val message = Message(user = user, text = txtMessage.text.toString())
-
-                chatViewModel.sendMessage(chatID, message)
-                txtMessage.setText("")
-            }
-        }
-
-        messagesView.adapter = adapter
-        messagesView.layoutManager = LinearLayoutManager(requireContext())
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        vm.loadPost(args.postID)
     }
 }

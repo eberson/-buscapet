@@ -48,6 +48,10 @@ class PostsViewModel(application: Application): AndroidViewModel(application) {
                 snapshot.children.forEach{
                     val item = it.getValue(Advertisement::class.java)!!
 
+                    if (item.done){
+                        return@forEach
+                    }
+
                     user.value?.let { usr ->
                         shouldFilter.postValue(false)
                         if (usr.id == item.user?.id){

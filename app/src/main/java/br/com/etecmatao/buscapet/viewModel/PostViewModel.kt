@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import br.com.etecmatao.buscapet.model.Advertisement
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -15,6 +16,17 @@ import kotlinx.coroutines.launch
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
     val post: MutableLiveData<Advertisement> = MutableLiveData()
+    val mayResolve: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    fun updateResolveStatus() = viewModelScope.launch(Dispatchers.IO) {
+        val authenticatedUser = FirebaseAuth.getInstance().currentUser
+
+        authenticatedUser?.let { usr ->
+            post.value?.let {
+                mayResolve.postValue(it.user?.email == usr.email)
+            }
+        }
+    }
 
     fun loadPost(id: String) = viewModelScope.launch(Dispatchers.IO) {
         val database = FirebaseDatabase.getInstance()
@@ -38,5 +50,15 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
             })
+    }
+
+    fun markAsResolved(advertisement: Advertisement) = viewModelScope.launch(Dispatchers.IO) {
+        advertisement.done = true
+
+        FirebaseDatabase.getInstance().reference
+            .child("advertisements")
+            .child(advertisement.id)
+            .setValue(advertisement)
+
     }
 }
