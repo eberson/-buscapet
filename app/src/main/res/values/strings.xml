@@ -14,6 +14,10 @@
     <string name="hint_pet_lost_description">Descrição da Publicação</string>
     <string name="hint_type_message">Digite sua mensagem</string>
     <string name="hint_select_post_type">Clique no tipo de postagem que deseja criar</string>
+    <string name="hint_danger_zone">Zona de perigo</string>
+    <string name="hint_old_password">Senha antiga</string>
+    <string name="hint_new_password">Nova senha</string>
+    <string name="hint_confirm_new_password">Confirme a nova senha</string>
 
     <string name="cd_post_image">Imagem da Postagem</string>
     <string name="cd_avatar">Imagem do Perfil</string>
@@ -29,24 +33,31 @@
     <string name="btn_sign_in">Entrar</string>
     <string name="btn_sign_up">Cadastrar</string>
     <string name="btn_publish">Publicar</string>
+    <string name="btn_edit">Alterar</string>
+    <string name="btn_save">Salvar</string>
     <string name="btn_exit">Sair</string>
     <string name="btn_new_add">Novo Anúncio</string>
     <string name="btn_continue">Continuar</string>
     <string name="btn_back">Voltar</string>
     <string name="btn_post">Postar</string>
     <string name="btn_solve">Marcar como resolvido</string>
+    <string name="btn_change_password">Alterar senha</string>
+    <string name="btn_delete_user">Remover conta</string>
 
 
     <string name="lnk_register">Cadastro</string>
 
     <string name="msg_required_field">Campo obrigatório</string>
     <string name="msg_password_does_not_match">As senhas são diferentes</string>
+    <string name="msg_password_changed">A senha foi alterada. No próximo login, lembre-se de usar as novas credenciais</string>
+    <string name="msg_old_password_invalid">A senha antiga informada não é válida</string>
     <string name="msg_invalid_email">E-mail inválido</string>
     <string name="msg_invalid_credential">Credenciais inválidas</string>
     <string name="msg_login_welcome">Seja bem vindo, %1$s!</string>
     <string name="msg_user_created">Usuário criado com sucesso!</string>
     <string name="msg_permission_not_granted">Usuário não deu as permissões necessárias</string>
     <string name="msg_post_complete_successful">A postagem, %1$s, foi realizada com sucesso!</string>
+
 
     <string name="menu_home">Home</string>
     <string name="menu_my_posts">Postagens</string>

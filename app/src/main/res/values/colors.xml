@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#5C74F2</color>
     <color name="colorPrimaryMedium">#3955EB</color>
@@ -10,4 +9,5 @@
     <color name="softGray">#e8e8e8</color>
     <color name="myMessage">#50A162</color>
     <color name="otherMessage">#999</color>
+    <color name="dangerZone">#A20000</color>
 </resources>

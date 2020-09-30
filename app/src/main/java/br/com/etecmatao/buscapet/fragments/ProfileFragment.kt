@@ -1,60 +1,114 @@
 package br.com.etecmatao.buscapet.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import br.com.etecmatao.buscapet.R
+import br.com.etecmatao.buscapet.viewModel.ProfileViewModel
+import kotlinx.android.synthetic.main.fragment_profile.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var vm: ProfileViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        vm = ViewModelProvider(requireActivity()).get(ProfileViewModel::class.java)
+        vm.loadCurrentUser()
+
+        registerObservables()
+        registerButtonListeners()
+    }
+
+    private fun registerObservables() {
+        vm.mayChangeProfile.observe(viewLifecycleOwner, Observer {
+            it?.let { editing ->
+                txtFirstName.isEnabled = editing
+                txtLastName.isEnabled = editing
+                txtEmail.isEnabled = editing
+            }
+        })
+
+        vm.user.observe(viewLifecycleOwner, Observer {
+            it?.let { usr ->
+                txtFirstName.setText(usr.firstName)
+                txtLastName.setText(usr.lastName)
+                txtEmail.setText(usr.email)
+            }
+        })
+    }
+
+    private fun registerButtonListeners() {
+        btnEdit.setOnClickListener { vm.startUpdatingProfile() }
+        btnSave.setOnClickListener {
+            val user = vm.user.value
+
+            user?.let { usr ->
+                usr.email = txtEmail.text.toString()
+                usr.lastName = txtLastName.text.toString()
+                usr.firstName = txtFirstName.text.toString()
+
+                vm.saveProfile(usr) {
+                    vm.endUpdatingProfile()
                 }
             }
+        }
+
+        btnChangePassword.setOnClickListener {
+            val oldPassword = txtChangeOldPassword.text.toString()
+            val newPassword = txtChangeNewPassword.text.toString()
+            val confirmNewPassword = txtChangeConfirmNewPassword.text.toString()
+
+            if (TextUtils.isEmpty(newPassword) ||
+                TextUtils.isEmpty(confirmNewPassword) ||
+                newPassword != confirmNewPassword
+            ) {
+
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getString(R.string.msg_password_does_not_match),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
+            vm.updatePassword(
+                oldPassword,
+                newPassword,
+                onSuccess = {
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getString(R.string.msg_password_changed),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    txtChangeOldPassword.setText("")
+                    txtChangeNewPassword.setText("")
+                    txtChangeConfirmNewPassword.setText("")
+                },
+                onInvalidPassword = {
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getString(R.string.msg_old_password_invalid),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            )
+        }
     }
 }
