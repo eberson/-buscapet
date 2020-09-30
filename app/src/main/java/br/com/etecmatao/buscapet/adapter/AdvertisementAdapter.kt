@@ -49,6 +49,7 @@ class AdvertisementAdapter internal constructor(context: Context, private val on
     fun addItems(items: List<Advertisement>){
         this.items.clear()
         this.items.addAll(items)
+        this.items.sortByDescending { it.date }
         this.notifyDataSetChanged()
     }
 }

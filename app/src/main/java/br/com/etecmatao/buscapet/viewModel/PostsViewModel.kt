@@ -63,7 +63,7 @@ class PostsViewModel(application: Application): AndroidViewModel(application) {
                 }
 
                 myAdvertisements.postValue(filteredItems)
-                advertisements.value = items
+                advertisements.postValue(items)
             }
 
             override fun onCancelled(error: DatabaseError) {

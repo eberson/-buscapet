@@ -95,6 +95,7 @@ class PostFragment : Fragment() {
             chatID = it.chat
 
             chatViewModel.loadMessages(chatID)
+            vm.updateResolveStatus()
 
             val resource = when(it.type){
                 AdType.PET_LOST -> R.drawable.ic_pet_lost
