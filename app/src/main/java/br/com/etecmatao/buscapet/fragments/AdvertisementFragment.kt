@@ -1,6 +1,8 @@
 package br.com.etecmatao.buscapet.fragments
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import br.com.etecmatao.buscapet.R
 import br.com.etecmatao.buscapet.viewModel.NewPostViewModel
 import kotlinx.android.synthetic.main.fragment_advertisement.*
+import kotlinx.android.synthetic.main.pet_lost_confirm_picture_fragment.*
 
 class AdvertisementFragment : Fragment() {
 
@@ -29,6 +32,15 @@ class AdvertisementFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         vm = ViewModelProvider(requireActivity()).get(NewPostViewModel::class.java)
+
+        vm.image.observe(viewLifecycleOwner, Observer {
+            it?.let { encodedContent ->
+                val decodedString = Base64.decode(encodedContent, Base64.DEFAULT)
+                val image = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+
+                adPicture.setImageBitmap(image)
+            }
+        })
 
         registerObservables()
 

@@ -11,10 +11,10 @@ import br.com.etecmatao.buscapet.helper.GlideApp
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.item_gallery_image.view.*
 
-class GalleryImageAdapter(private val items: List<Image>): RecyclerView.Adapter<GalleryImageAdapter.ViewHolder>() {
+class GalleryImageAdapter(val listener: (image: Image) -> Unit): RecyclerView.Adapter<GalleryImageAdapter.ViewHolder>() {
 
+    private val items: MutableList<Image> = mutableListOf()
     private var context: Context? = null
-    var listener: GalleryImageClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
@@ -28,6 +28,12 @@ class GalleryImageAdapter(private val items: List<Image>): RecyclerView.Adapter<
         return ViewHolder(view)
     }
 
+    fun setImages(images: List<Image>){
+        items.clear()
+        items.addAll(images)
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind()
@@ -37,18 +43,13 @@ class GalleryImageAdapter(private val items: List<Image>): RecyclerView.Adapter<
             val image = items[adapterPosition]
 
             GlideApp.with(context!!)
-                .load(image.imageUrl)
+                .load(image.contentURI)
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(itemView.ivGalleryImage)
 
             itemView.container.setOnClickListener{
-                listener?.onClick(adapterPosition)
+                listener(image)
             }
         }
-    }
-
-    interface GalleryImageClickListener {
-        fun onClick(position: Int)
-    }
-}
+    } }

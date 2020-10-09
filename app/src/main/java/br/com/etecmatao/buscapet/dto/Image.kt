@@ -1,6 +1,9 @@
 package br.com.etecmatao.buscapet.dto
 
+import android.net.Uri
+
 data class Image (
-    val imageUrl: String,
-    val title: String
+    val contentURI: Uri,
+    val id: String,
+    val displayName: String
 )

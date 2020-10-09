@@ -1,7 +1,9 @@
 package br.com.etecmatao.buscapet.fragments
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ import br.com.etecmatao.buscapet.model.Message
 import br.com.etecmatao.buscapet.viewModel.ChatViewModel
 import br.com.etecmatao.buscapet.viewModel.PostViewModel
 import kotlinx.android.synthetic.main.fragment_post.*
+import kotlinx.android.synthetic.main.pet_lost_confirm_picture_fragment.*
 import java.util.*
 
 class PostFragment : Fragment() {
@@ -92,19 +95,28 @@ class PostFragment : Fragment() {
             txtPostContent.text = it.description
             txtPostDate.text = DateFormat.getDateFormat(requireContext()).format(it.date ?: Date())
 
+            if (it.picture.isNotEmpty()){
+                val decodedString = Base64.decode(it.picture[0], Base64.DEFAULT)
+                val image = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+
+                imgPost.setImageBitmap(image)
+            } else {
+                val resource = when(it.type){
+                    AdType.PET_LOST -> R.drawable.ic_pet_lost
+                    AdType.PET_DONATION -> R.drawable.ic_pet_donation
+                    AdType.PET_ADVERTISEMENT -> R.drawable.ic_cao
+                    else -> R.drawable.ic_cao
+                }
+
+                imgPost.setImageResource(resource)
+            }
+
+
+
             chatID = it.chat
 
             chatViewModel.loadMessages(chatID)
             vm.updateResolveStatus()
-
-            val resource = when(it.type){
-                AdType.PET_LOST -> R.drawable.ic_pet_lost
-                AdType.PET_DONATION -> R.drawable.ic_pet_donation
-                AdType.PET_ADVERTISEMENT -> R.drawable.ic_cao
-                else -> R.drawable.ic_cao
-            }
-
-            imgPost.setImageResource(resource)
         })
     }
 }

@@ -19,6 +19,11 @@ import kotlinx.coroutines.launch
 class NewPostViewModel(application: Application): AndroidViewModel(application) {
     val postType: MutableLiveData<AdType> = MutableLiveData()
     val user: MutableLiveData<User> = MutableLiveData()
+    val image: MutableLiveData<String> = MutableLiveData()
+
+    fun updateImage(content: String) = viewModelScope.launch(Dispatchers.IO) {
+        image.postValue(content)
+    }
 
     fun loadCurrentUser() = viewModelScope.launch(Dispatchers.IO) {
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -47,12 +52,16 @@ class NewPostViewModel(application: Application): AndroidViewModel(application) 
     }
 
     fun publish(title: String, description: String, onSuccess: (advertisement: Advertisement) -> Unit) = viewModelScope.launch(Dispatchers.IO) {
+        val pictures = mutableListOf<String>()
+
+        image.value?.let { pictures.add(it) }
+
         val advertisement = Advertisement(
             title = title,
             description = description,
             user = user.value,
             type = postType.value!!,
-            picture = mutableListOf()
+            picture = pictures
         )
 
         FirebaseDatabase.getInstance().reference

@@ -3,6 +3,7 @@ package br.com.etecmatao.buscapet.viewModel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import br.com.etecmatao.buscapet.model.User
@@ -88,7 +89,7 @@ class ProfileViewModel(application: Application): AndroidViewModel(application) 
                         it?.email ?: "" == loggedUser.email
                     }
 
-                    user.value = storedUser
+                    user.postValue(storedUser)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
