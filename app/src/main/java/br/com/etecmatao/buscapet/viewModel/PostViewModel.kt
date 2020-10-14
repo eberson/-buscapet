@@ -52,13 +52,16 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             })
     }
 
-    fun markAsResolved(advertisement: Advertisement) = viewModelScope.launch(Dispatchers.IO) {
+    fun markAsResolved(advertisement: Advertisement, onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
         advertisement.done = true
 
         FirebaseDatabase.getInstance().reference
             .child("advertisements")
             .child(advertisement.id)
             .setValue(advertisement)
+            .addOnCompleteListener {
+                onSuccess()
+            }
 
     }
 }

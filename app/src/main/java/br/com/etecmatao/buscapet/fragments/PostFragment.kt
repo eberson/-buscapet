@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.etecmatao.buscapet.R
@@ -61,7 +62,9 @@ class PostFragment : Fragment() {
         }
 
         btnSolve.setOnClickListener {
-            vm.markAsResolved(vm.post.value!!)
+            vm.markAsResolved(vm.post.value!!){
+                findNavController().popBackStack()
+            }
         }
 
         messagesView.adapter = adapter
