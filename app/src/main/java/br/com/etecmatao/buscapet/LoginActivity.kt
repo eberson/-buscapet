@@ -1,11 +1,15 @@
 package br.com.etecmatao.buscapet
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import br.com.etecmatao.buscapet.biometrics.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -15,6 +19,17 @@ import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var biometricPrompt: BiometricPrompt
+    private val cryptographyManager = CryptographyManager()
+    private val cipherTextWrapper
+        get() = cryptographyManager.getCipherTextWrapperFromSharedPrefs(
+            applicationContext,
+            SHARED_PREFS_FILENAME,
+            Context.MODE_PRIVATE,
+            CIPHER_TEXT_WRAPPER
+        )
+
 
     private lateinit var googleClient: GoogleSignInClient
 
@@ -31,6 +46,44 @@ class LoginActivity : AppCompatActivity() {
 
         google_signin_button.setOnClickListener {
             googleLogin(it)
+        }
+
+        val canAuthenticate = BiometricManager.from(applicationContext).canAuthenticate()
+
+        if (canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS) {
+            use_biometrics.visibility = View.VISIBLE
+            use_biometrics.setOnClickListener {
+                if (cipherTextWrapper != null) {
+                    showBiometricPromptForDecryption()
+                }
+            }
+        } else {
+            use_biometrics.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun showBiometricPromptForDecryption() {
+        cipherTextWrapper?.let { textWrapper ->
+            val secretKeyName = getString(R.string.secret_key_name)
+            val cipher = cryptographyManager.getInitializedCipherForDecryption(
+                secretKeyName, textWrapper.initializationVector
+            )
+            biometricPrompt =
+                BiometricPromptUtils.createBiometricPrompt(
+                    this,
+                    ::decryptServerTokenFromStorage
+                )
+            val promptInfo = BiometricPromptUtils.createPromptInfo(this)
+            biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
+        }
+    }
+
+    private fun decryptServerTokenFromStorage(authResult: BiometricPrompt.AuthenticationResult) {
+        cipherTextWrapper?.let { textWrapper ->
+            authResult.cryptoObject?.cipher?.let {
+                val plaintext = cryptographyManager.decryptData(textWrapper.ciphertext, it)
+                SampleAppUser.fakeToken = plaintext
+            }
         }
     }
 
