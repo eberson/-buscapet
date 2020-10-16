@@ -40,11 +40,18 @@ class RegisterActivity : AppCompatActivity() {
             password = txtPassword.text.toString()
         )
 
-        UserService.instance.save(user, credential)
+        UserService.instance.save(user, credential){
+            Toast.makeText(
+                this,
+                getString(R.string.msg_user_created),
+                Toast.LENGTH_SHORT
+            ).show()
+
+            finish()
+        }
 
 
-//        Toast.makeText(this, getString(R.string.msg_user_created), Toast.LENGTH_SHORT).show()
-//        finish()
+
     }
 
     private fun validEmpty(field: TextInputEditText): Boolean {
