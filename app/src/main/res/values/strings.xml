@@ -35,6 +35,7 @@
     <string name="btn_publish">Publicar</string>
     <string name="btn_edit">Alterar</string>
     <string name="btn_save">Salvar</string>
+    <string name="btn_delete">Remover</string>
     <string name="btn_exit">Sair</string>
     <string name="btn_new_add">Novo Anúncio</string>
     <string name="btn_continue">Continuar</string>
