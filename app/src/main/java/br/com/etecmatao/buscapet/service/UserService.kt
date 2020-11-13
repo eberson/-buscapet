@@ -7,13 +7,18 @@ import com.google.firebase.database.FirebaseDatabase
 
 class UserService {
 
-    fun save(user: User, credential: Credential, onSuccess: () -> Unit){
+    fun save(user: User, credential: Credential?, onSuccess: () -> Unit){
         val database = FirebaseDatabase.getInstance().reference
 
         val task = database.child("users").child(user.id).setValue(user)
 
         task.addOnSuccessListener {
             Log.d("USER", "user ${user.firstName} was successfully saved")
+
+            if (credential == null){
+                onSuccess()
+                return@addOnSuccessListener
+            }
 
             credential.signUp(onSuccess)
 

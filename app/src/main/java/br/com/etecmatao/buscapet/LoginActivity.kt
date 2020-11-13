@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import br.com.etecmatao.buscapet.model.User
+import br.com.etecmatao.buscapet.model.UserPasswordCredential
+import br.com.etecmatao.buscapet.service.UserService
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -13,6 +16,9 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.txtEmail
+import kotlinx.android.synthetic.main.activity_login.txtPassword
+import kotlinx.android.synthetic.main.activity_register.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -98,7 +104,18 @@ class LoginActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                finish()
+                it.result?.user?.let { usr ->
+                    val newUser = User(
+                        firstName = usr.displayName!!,
+                        lastName = "",
+                        email = usr.email!!,
+                        picture = ""
+                    )
+
+                    UserService.instance.save(newUser, null){
+                        finish()
+                    }
+                }
             } else {
                 Toast.makeText(
                     this,
